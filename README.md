@@ -22,6 +22,7 @@ An Instagram bot that likes an image and posts a random comment.
 - `WAIT_BETWEEN_POSTS`: How long to randomly wait between posts, where the value on the left is the minimum and the value on the right is the maximum. **Do keep in mind that colorscanning also takes some time, so it will take more time between posts than you initially set.**
 - `INITIAL_WAIT_TIME`: Initial time to wait. Consider keeping it above 2000 so that you have plenty of time to switch to your Instagram tab.
 - `SHOULD_COMMENT`: Should the bot comment and like or just like?
+- `SWITCH_ON_RATELIMIT`: Should switch to just liking if it gets rate limited?
 
 - `NEXTPOST`: Coordinates of the "Next Post" button. These don't move, so they're used as astatic coordinates.
 - `SCHEIGHT` and `SCWIDTH`: Define the screenshot which is colorscanned to find the Post button.
