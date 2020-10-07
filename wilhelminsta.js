@@ -12,6 +12,7 @@ let COMMENTS = [
     "Yesterday was leg day, today is satanic curse day",
     "Youngsters these days are too interested in homegrown carrots",
     "I get stronger every time you question me",
+    "BOOPBIBO",
 
     "I am the owner of the Southern Peninsula.", "I am the owner of the Northern Peninsula.",
     "The entire Eastern hemisphere belongs to me.", "The entire Western hemisphere belongs to me.",
