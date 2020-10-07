@@ -12,7 +12,6 @@ let COMMENTS = [
     "Yesterday was leg day, today is satanic curse day",
     "Youngsters these days are too interested in homegrown carrots",
     "I get stronger every time you question me",
-    "BOOPBIBO",
 
     "I am the owner of the Southern Peninsula.", "I am the owner of the Northern Peninsula.",
     "The entire Eastern hemisphere belongs to me.", "The entire Western hemisphere belongs to me.",
@@ -25,15 +24,17 @@ let COMMENTS = [
 let CHARS_PER_MINUTE = 1000; //Default: 1000
 let WAIT_BETWEEN_POSTS = [500, 800]; //Default: [4000, 5000]
 let INITIAL_WAIT_TIME = 2000; //Default: 2000
-let SHOULD_COMMENT = false;
+let SHOULD_COMMENT = true; // Should the bot comment and like or just like? (Useful for rate limits)
+let SWITCH_ON_RATELIMIT = true; // Should the bot switch to just liking if it gets rate limited?
 
 // Coordinates
 let NEXTPOST = [1450, 555]
 
 // Screenshot variables
-// #1095F6 POST active, #BBE1FD POST inactive
 let SCHEIGHT = [680, 850]
 let SCWIDTH = [1120, 1520]
+
+let rateLimit = false;
 
 function getComment() {
     return COMMENTS[Math.floor(Math.random() * COMMENTS.length)];
@@ -67,10 +68,23 @@ function nextPost() {
 }
 
 function mainFunc() {
+
     // Find post button
     let pbCoords = findPostButton();
     if(!pbCoords[0]) {
         nextPost();
+        return;
+    }
+
+    if (rateLimit) {
+        if (SWITCH_ON_RATELIMIT) {
+            SHOULD_COMMENT = false;
+        }
+        rateLimit = false;
+    }
+
+    // Do we have any next posts?
+    if (robot.getPixelColor(1750, 360) != "000000") {
         return;
     }
 
@@ -89,6 +103,13 @@ function mainFunc() {
         // No need to use setTimeout! typeStringDelayed() is synchronous
         robot.moveMouseSmooth(pbCoords[0], pbCoords[1]);
         robot.mouseClick();
+
+        setTimeout(function() {
+            // "Couldn't post comment" popup
+            if(robot.getPixelColor(1150, 951) == "222222") {
+                rateLimit = true;
+            }
+        }, 1000)
     }
     
     nextPost();
